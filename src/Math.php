@@ -25,6 +25,29 @@ class Math
      */
     public static function addLarge(string $a, string $b): string
     {
-        return "$a + $b";
+        $arrA = array_reverse(str_split($a));
+        $arrB = array_reverse(str_split($b));
+        $res = [];
+
+        if (count($arrA) <= count($arrB)) {
+            $longest = $arrB;
+            $shortest = $arrA;
+        } else {
+            $longest = $arrA;
+            $shortest = $arrB;
+        }
+
+        $subres = [];
+        foreach ($longest as $key => $value) {
+            $subres = array_reverse(
+                str_split(
+                    $value + ($shortest[$key] ?? 0) + ($subres[1] ?? 0)
+                )
+            );
+
+            $res[] = $subres[0];
+        }
+
+        return implode('', array_reverse($res));
     }
 }
